@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Camada de acessibilidade (alto contraste, daltonismo, escalas). */
+@import '../styles/accessibility.css';
+
+/* ==========================================================================
+   DESIGN SYSTEM — GRUPO FLM
+   Todas as cores vivem AQUI, como CSS Variables no formato HSL (H S% L%),
+   sem o wrapper hsl() — o Tailwind aplica hsl(var(--x) / alpha) por nós.
+   Paleta: branco predominante · azul-marinho elegante · azul claro em fundos ·
+   vermelho SOMENTE em CTAs.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    /* Superfícies */
+    --background: 0 0% 100%; /* branco puro */
+    --foreground: 215 40% 16%; /* azul-marinho quase preto (texto) */
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 40% 16%;
+
+    /* Marca — azul-marinho elegante */
+    --primary: 213 62% 18%; /* #0f2a4a aprox. */
+    --primary-foreground: 0 0% 100%;
+
+    /* Secundária — azul claro apenas para fundos */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 213 62% 18%;
+
+    /* Acento — azul claro de apoio (fundos/realces sutis) */
+    --accent: 206 90% 94%;
+    --accent-foreground: 213 62% 18%;
+
+    /* Neutros */
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 20% 40%;
+
+    /* CTA / destrutivo — vermelho reservado exclusivamente a ações */
+    --danger: 0 72% 45%;
+    --danger-foreground: 0 0% 100%;
+
+    /* Estados */
+    --success: 152 55% 32%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 45%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Bordas / inputs / foco */
+    --border: 214 25% 88%;
+    --input: 214 25% 86%;
+    --ring: 213 62% 30%; /* anel de foco visível e contrastado */
+
+    /* Raio e sombras (tons frios discretos) */
+    --radius: 0.75rem;
+    --shadow-soft: 0 1px 2px 0 hsl(213 40% 20% / 0.04);
+    --shadow-card: 0 4px 16px -4px hsl(213 40% 20% / 0.1);
+    --shadow-elevated: 0 12px 32px -8px hsl(213 40% 20% / 0.16);
+  }
+
+  /* Tema escuro — ativado por classe .dark, [data-theme="dark"] ou pelo SO */
+  .dark,
+  [data-theme='dark'] {
+    --background: 215 42% 9%;
+    --foreground: 210 30% 96%;
+
+    --card: 215 40% 12%;
+    --card-foreground: 210 30% 96%;
+
+    --primary: 206 90% 62%;
+    --primary-foreground: 215 42% 9%;
+
+    --secondary: 215 32% 18%;
+    --secondary-foreground: 210 30% 96%;
+
+    --accent: 215 34% 20%;
+    --accent-foreground: 210 30% 96%;
+
+    --muted: 215 30% 18%;
+    --muted-foreground: 214 18% 68%;
+
+    --danger: 0 72% 58%;
+    --danger-foreground: 0 0% 100%;
+
+    --success: 152 50% 45%;
+    --success-foreground: 215 42% 9%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 215 42% 9%;
+
+    --border: 215 28% 24%;
+    --input: 215 28% 24%;
+    --ring: 206 90% 62%;
+
+    --shadow-soft: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 4px 16px -4px hsl(0 0% 0% / 0.45);
+    --shadow-elevated: 0 12px 32px -8px hsl(0 0% 0% / 0.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    /* Escala tipográfica controlável pela Toolbar de Acessibilidade. */
+    font-size: calc(1rem * var(--a11y-font-scale, 1));
+    line-height: calc(1.625 * var(--a11y-line-height-scale, 1));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold tracking-tight text-foreground;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco visível e consistente em todo elemento interativo (WCAG 2.2). */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  /* Respeita a preferência do sistema por menos movimento. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Link "Pular para o conteúdo" — visível apenas ao focar via teclado. */
+  .skip-link {
+    @apply sr-only rounded-md bg-primary px-4 py-2 text-primary-foreground;
+  }
+  .skip-link:focus {
+    @apply not-sr-only fixed left-4 top-4 z-[100] shadow-elevated;
+  }
+
+  /* Área de toque mínima confortável (44px) — importante para público sênior. */
+  .tap-target {
+    @apply min-h-11 min-w-11;
+  }
+}

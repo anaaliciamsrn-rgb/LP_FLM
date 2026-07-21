@@ -1,0 +1,60 @@
+/* ==========================================================================
+   CAMADA DE ACESSIBILIDADE
+   Arquitetura preparada para a Toolbar (a UI será criada em fase futura).
+   A toolbar deverá aplicar estes atributos no elemento <html> e persistir
+   as escolhas em LocalStorage:
+
+     data-contrast="high"
+     data-colorblind="protanopia | deuteranopia | tritanopia"
+     style="--a11y-font-scale: 1.25; --a11y-line-height-scale: 1.5"
+     data-reduce-motion="true"
+
+   Nada aqui está "ligado" por padrão — são apenas os ganchos de estilo.
+   ========================================================================== */
+
+/* --- Escalas tipográficas (fallbacks caso a variável não seja definida) --- */
+:root {
+  --a11y-font-scale: 1;
+  --a11y-line-height-scale: 1;
+}
+
+/* --- Alto contraste ------------------------------------------------------ */
+html[data-contrast='high'] {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --primary: 213 100% 20%;
+  --primary-foreground: 0 0% 100%;
+  --danger: 0 100% 35%;
+  --danger-foreground: 0 0% 100%;
+  --border: 0 0% 0%;
+  --input: 0 0% 0%;
+  --ring: 0 0% 0%;
+  --muted-foreground: 0 0% 15%;
+}
+
+html[data-contrast='high'] * {
+  border-color: hsl(var(--border)) !important;
+}
+
+/* --- Redução de movimento forçada pela toolbar --------------------------- */
+html[data-reduce-motion='true'] *,
+html[data-reduce-motion='true'] *::before,
+html[data-reduce-motion='true'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* --- Filtros de daltonismo ----------------------------------------------- */
+/* Aplicam os filtros SVG (definidos em components/accessibility/color-blind-filters).
+   O filtro é aplicado à raiz para afetar toda a página. */
+html[data-colorblind='protanopia'] body {
+  filter: url('#a11y-protanopia');
+}
+html[data-colorblind='deuteranopia'] body {
+  filter: url('#a11y-deuteranopia');
+}
+html[data-colorblind='tritanopia'] body {
+  filter: url('#a11y-tritanopia');
+}
