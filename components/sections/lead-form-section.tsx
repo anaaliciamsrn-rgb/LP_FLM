@@ -26,7 +26,7 @@ export function LeadFormSection() {
           <span className="mb-3 inline-block text-sm font-bold uppercase tracking-widest text-white/70">
             Fale com a gente
           </span>
-          <h2 id="formulario-title" className="text-3xl sm:text-4xl">
+          <h2 id="formulario-title" className="text-3xl sm:text-4xl text-white">
             Receba uma análise personalizada, gratuita e sem compromisso
           </h2>
           <p className="mt-4 max-w-md text-lg leading-relaxed text-white/80">
