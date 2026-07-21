@@ -5,10 +5,12 @@
  */
 import type { LucideIcon } from 'lucide-react';
 import {
+  Activity,
   CalendarClock,
   Coins,
   HandHeart,
   HeartHandshake,
+  UserCheck,
   Hospital,
   MapPin,
   MessagesSquare,
@@ -58,9 +60,14 @@ export const ANALYSIS_ITEMS: IconItem[] = [
     description: 'O que está incluso e como funciona o modelo de coparticipação.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Reputação da operadora',
-    description: 'Solidez, avaliações e histórico de atendimento de cada operadora.',
+    icon: UserCheck,
+    title: 'Tipo de contratação',
+    description: 'Diferenças entre plano individual, familiar, coletivo por adesão ou empresarial, quando disponíveis.',
+  },
+  {
+    icon: Activity,
+    title: 'Especialidades importantes',
+    description: 'Necessidade de acompanhamento com cardiologistas, geriatras, ortopedistas e outros profissionais.',
   },
 ];
 
