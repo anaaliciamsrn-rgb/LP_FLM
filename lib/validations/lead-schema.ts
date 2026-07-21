@@ -37,6 +37,12 @@ export const leadSchema = z.object({
     .regex(/^\d{2,3}$/, 'Idade inválida.')
     .optional()
     .or(z.literal('')),
+  secondAge: z
+    .string()
+    .trim()
+    .regex(/^\d{2,3}$/, 'Idade inválida.')
+    .optional()
+    .or(z.literal('')),
   city: z.string().trim().max(80, 'Cidade muito longa.').optional().or(z.literal('')),
   message: z.string().trim().max(600, 'Mensagem muito longa.').optional().or(z.literal('')),
 });

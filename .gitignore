@@ -23,6 +23,7 @@ yarn-error.log*
 .env
 .env*.local
 .env.production
+_smtp-config.php
 
 # Editor / OS
 .vscode/*
@@ -37,3 +38,4 @@ yarn-error.log*
 
 # Vercel
 .vercel
+

@@ -11,10 +11,8 @@ import { leadSchema, PLAN_FOR_OPTIONS, type LeadSchema } from '@/lib/validations
 
 /**
  * Formulário de captação de lead.
- * - Obrigatórios sempre visíveis; opcionais revelados por "Adicionar mais
- *   informações" (expande suavemente).
- * - Validação com Zod. Envio para /api/lead (preparado para e-mail/CRM).
- * - Acessível: labels associados, aria-invalid, erros com role="alert".
+ * - Dinâmico: Revela 1 ou 2 campos de idade baseado na seleção de quem é o plano.
+ * - Validação com Zod e React Hook Form. Envio para /api/lead.php.
  */
 export function LeadForm() {
   const [showOptional, setShowOptional] = useState(false);
@@ -24,15 +22,19 @@ export function LeadForm() {
     register,
     handleSubmit,
     reset,
+    watch, // Importante para monitorar os valores do formulário em tempo real
     formState: { errors, isSubmitting },
   } = useForm<LeadSchema>({
     resolver: zodResolver(leadSchema),
     mode: 'onBlur',
   });
 
+  // Captura o valor atual selecionado na caixa de seleção "O plano é para"
+  const valorPlanoPara = watch('planFor');
+
   async function onSubmit(data: LeadSchema) {
     try {
-      const res = await fetch('/api/lead', {
+      const res = await fetch('/api/lead.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -110,6 +112,17 @@ export function LeadForm() {
           </Field>
         </div>
 
+        <Field label="E-mail" htmlFor="email" required error={errors.email?.message}>
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="voce@email.com"
+            aria-invalid={!!errors.email}
+            {...register('email')}
+          />
+        </Field>
+
         {/* Botão que revela os campos opcionais */}
         <button
           type="button"
@@ -137,30 +150,49 @@ export function LeadForm() {
               className="overflow-hidden"
             >
               <div className="grid gap-5 pt-1">
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="E-mail" htmlFor="email" error={errors.email?.message}>
-                    <Input
-                      id="email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="voce@email.com"
-                      aria-invalid={!!errors.email}
-                      {...register('email')}
-                    />
-                  </Field>
-                  <Field label="Idade" htmlFor="age" error={errors.age?.message}>
-                    <Input
-                      id="age"
-                      inputMode="numeric"
-                      placeholder="Ex.: 62"
-                      aria-invalid={!!errors.age}
-                      {...register('age')}
-                    />
-                  </Field>
-                </div>
+                
+                {/* LOGICA CONDICIONAL DE IDADES: 
+                    Se o valor selecionado for 'casal', renderiza a grade com duas caixas de idade */}
+                {(valorPlanoPara === 'para-casal') ||(valorPlanoPara === 'para-meus-pais') ? (
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Idade do primeiro beneficiário" htmlFor="age" error={errors.age?.message}>
+                      <Input
+                        id="age"
+                        inputMode="numeric"
+                        placeholder="Ex.: 62"
+                        aria-invalid={!!errors.age}
+                        {...register('age')}
+                      />
+                    </Field>
+                    <Field label="Idade do segundo beneficiário" htmlFor="secondAge" error={(errors as any).secondAge?.message}>
+                      <Input
+                        id="secondAge"
+                        inputMode="numeric"
+                        placeholder="Ex.: 60"
+                        aria-invalid={!!(errors as any).secondAge}
+                        {...register('secondAge' as any)}
+                      />
+                    </Field>
+                  </div>
+                ) : (
+                  /* Se for qualquer outro valor selecionado (menos a string vazia inicial), exibe apenas um campo */
+                  !!valorPlanoPara && (
+                    <Field label="Idade do beneficiário" htmlFor="age" error={errors.age?.message}>
+                      <Input
+                        id="age"
+                        inputMode="numeric"
+                        placeholder="Ex.: 65"
+                        aria-invalid={!!errors.age}
+                        {...register('age')}
+                      />
+                    </Field>
+                  )
+                )}
+
                 <Field label="Cidade" htmlFor="city" error={errors.city?.message}>
                   <Input id="city" autoComplete="address-level2" placeholder="Sua cidade" {...register('city')} />
                 </Field>
+
                 <Field label="Mensagem" htmlFor="message" error={errors.message?.message}>
                   <Textarea
                     id="message"
