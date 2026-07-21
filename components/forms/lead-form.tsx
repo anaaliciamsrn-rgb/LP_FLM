@@ -159,7 +159,7 @@ export function LeadForm() {
                       <Input
                         id="age"
                         inputMode="numeric"
-                        placeholder="Ex.: 62"
+                        placeholder="Ex.: 65"
                         aria-invalid={!!errors.age}
                         {...register('age')}
                       />
@@ -177,6 +177,7 @@ export function LeadForm() {
                 ) : (
                   /* Se for qualquer outro valor selecionado (menos a string vazia inicial), exibe apenas um campo */
                   !!valorPlanoPara && (
+                    <div className="grid gap-5 sm:grid-cols-2">
                     <Field label="Idade do beneficiário" htmlFor="age" error={errors.age?.message}>
                       <Input
                         id="age"
@@ -186,6 +187,7 @@ export function LeadForm() {
                         {...register('age')}
                       />
                     </Field>
+                    </div>
                   )
                 )}
 
