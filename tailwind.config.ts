@@ -133,11 +133,26 @@ const config: Config = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+        kenburns: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.02)' },
+        },
+        'float-dust': {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)', opacity: '0.35' },
+          '50%': { transform: 'translateY(-14px) translateX(6px)', opacity: '0.75' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.4)', opacity: '0.5' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.4s ease-out both',
+        kenburns: 'kenburns 24s ease-in-out infinite',
+        'float-dust': 'float-dust 7s ease-in-out infinite',
+        'pulse-soft': 'pulse-soft 2.2s ease-in-out infinite',
       },
     },
   },

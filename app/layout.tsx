@@ -51,9 +51,13 @@ export default function RootLayout({
           <ColorBlindFilters />
           <Navbar />
 
-          <main id={SKIP_LINK_TARGET_ID}>{children}</main>
+          {/* #app-content recebe o filtro de daltonismo. Navbar e toolbar
+              ficam FORA para permanecerem fixos e sempre acessíveis. */}
+          <div id="app-content">
+            <main id={SKIP_LINK_TARGET_ID}>{children}</main>
+            <Footer />
+          </div>
 
-          <Footer />
           <AccessibilityToolbar />
         </AppProviders>
       </body>

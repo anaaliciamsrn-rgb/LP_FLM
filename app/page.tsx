@@ -5,6 +5,7 @@ import {
   ContextSection,
   AnalysisSection,
   PossibilitiesSection,
+  PricingSection,
   AudienceSection,
   HowItWorksSection,
   DifferentialsSection,
@@ -31,6 +32,7 @@ export default function HomePage() {
       <ContextSection />
       <AnalysisSection />
       <PossibilitiesSection />
+      <PricingSection />
       <AudienceSection />
       <HowItWorksSection />
       <DifferentialsSection />
