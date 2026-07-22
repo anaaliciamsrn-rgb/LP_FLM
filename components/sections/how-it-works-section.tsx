@@ -2,16 +2,11 @@ import { Container, SectionHeading, Reveal } from '@/components/common';
 import { STEPS_ITEMS } from '@/constants/content';
 
 /**
- * Como funciona — timeline do processo.
+ * Como funciona — timeline SEMPRE vertical (mais legível que espremer o
+ * texto em colunas horizontais, e o olho acompanha melhor de cima pra
+ * baixo). Entrada dos passos mais rápida (delay menor entre eles).
  *
- * Seção institucional: fundo azul-marinho com grid extremamente discreto
- * (5–8% de opacidade), reforçando a identidade visual do Grupo FLM como uma
- * "pausa" entre as áreas brancas do site — sem competir com o conteúdo.
- *
- * Estrutura da timeline inalterada (mesma lógica de STEPS_ITEMS, Reveal e
- * layout horizontal/vertical); apenas a paleta foi adaptada para o fundo
- * escuro (texto branco, ícones azul-claro, número em vermelho institucional
- * como pequeno detalhe de destaque).
+ * Seção institucional: fundo azul-marinho com grid extremamente discreto.
  */
 export function HowItWorksSection() {
   return (
@@ -23,7 +18,6 @@ export function HowItWorksSection() {
         background: 'linear-gradient(160deg, hsl(213 66% 11%) 0%, hsl(213 60% 19%) 100%)',
       }}
     >
-      {/* Grid quase imperceptível — mesma identidade da Hero, opacidade baixa. */}
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-[0.06]"
@@ -42,29 +36,25 @@ export function HowItWorksSection() {
           eyebrow="Simples do início ao fim"
           title="Como funciona"
           description="Quatro passos claros — do primeiro contato à decisão tranquila."
-          className="mx-auto mb-16"
+          className="mx-auto mb-14"
         />
 
-        <ol className="relative grid gap-8 lg:grid-cols-4 lg:gap-6">
-          {/* Linha de conexão: vertical no mobile, horizontal no desktop. */}
-          <span
-            aria-hidden="true"
-            className="absolute left-6 top-0 h-full w-px bg-white/15 lg:left-0 lg:top-8 lg:h-px lg:w-full"
-          />
+        <ol className="relative mx-auto flex max-w-2xl flex-col gap-8">
+          {/* Linha de conexão vertical à esquerda, atrás dos números. */}
+          <span aria-hidden="true" className="absolute left-6 top-0 h-full w-px bg-white/15" />
+
           {STEPS_ITEMS.map((step, i) => (
-            <Reveal as="li" key={step.step} delay={i * 0.1} className="relative">
-              <div className="flex items-start gap-4 lg:flex-col lg:items-start">
+            <Reveal as="li" key={step.step} delay={i * 0.18} className="relative">
+              <div className="flex items-start gap-5">
                 <span className="relative z-10 inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-danger font-heading text-lg font-bold text-danger-foreground shadow-[0_8px_20px_-6px_rgba(220,38,38,0.5)] ring-4 ring-[hsl(213_60%_15%)]">
                   {step.step}
                 </span>
-                <div className="lg:mt-5">
-                  <div className="mb-1.5 hidden text-[#8ec5ff] lg:block">
-                    <step.icon aria-hidden="true" className="size-6" />
+                <div className="pt-1.5">
+                  <div className="mb-1.5 flex items-center gap-2 text-[#8ec5ff]">
+                    <step.icon aria-hidden="true" className="size-5" />
+                    <h3 className="text-lg font-bold text-white">{step.title}</h3>
                   </div>
-                  <h3 className="text-lg font-bold text-white">{step.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-white/70">
-                    {step.description}
-                  </p>
+                  <p className="text-sm leading-relaxed text-white/70">{step.description}</p>
                 </div>
               </div>
             </Reveal>
