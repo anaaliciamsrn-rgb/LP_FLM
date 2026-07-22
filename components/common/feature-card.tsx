@@ -16,7 +16,7 @@ export function FeatureCard({ icon: Icon, title, description, className }: Featu
   return (
     <div
       className={cn(
-        'group h-full rounded-2xl border border-border/70 bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-card',
+        'group h-full rounded-2xl border border-border/70 bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_0_0_1px_rgba(15,42,74,0.25),0_16px_32px_-12px_rgba(15,42,74,0.35)]',
         className
       )}
     >

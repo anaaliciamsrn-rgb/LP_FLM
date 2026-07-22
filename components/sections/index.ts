@@ -2,6 +2,7 @@ export * from './hero';
 export * from './context-section';
 export * from './analysis-section';
 export * from './possibilities-section';
+export * from './pricing-section';
 export * from './audience-section';
 export * from './how-it-works-section';
 export * from './differentials-section';

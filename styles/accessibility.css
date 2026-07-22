@@ -47,14 +47,15 @@ html[data-reduce-motion='true'] *::after {
 }
 
 /* --- Filtros de daltonismo ----------------------------------------------- */
-/* Aplicam os filtros SVG (definidos em components/accessibility/color-blind-filters).
-   O filtro é aplicado à raiz para afetar toda a página. */
-html[data-colorblind='protanopia'] body {
+/* Aplicados a #app-content (navbar e toolbar ficam FORA dele), para que os
+   elementos fixed — como o botão de acessibilidade — não sejam afetados.
+   Um `filter` em um ancestral transforma `position: fixed` em `absolute`. */
+html[data-colorblind='protanopia'] #app-content {
   filter: url('#a11y-protanopia');
 }
-html[data-colorblind='deuteranopia'] body {
+html[data-colorblind='deuteranopia'] #app-content {
   filter: url('#a11y-deuteranopia');
 }
-html[data-colorblind='tritanopia'] body {
+html[data-colorblind='tritanopia'] #app-content {
   filter: url('#a11y-tritanopia');
 }

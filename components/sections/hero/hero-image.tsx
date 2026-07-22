@@ -1,51 +1,58 @@
 'use client';
 
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import { m, useReducedMotion } from 'framer-motion';
 
 /**
- * HeroImage — fotografia PROTAGONISTA da Hero (não é um card).
+ * HeroImage — fundo cinematográfico da Hero.
  *
- * Ocupa todo o fundo da Hero. Sobre ela aplicamos um gradiente branco
- * extremamente suave para garantir a legibilidade do texto (navy sobre branco
- * = contraste AA). O fundo `bg-secondary` funciona como rede de segurança:
- * se a imagem demorar ou falhar, a área permanece clara e o texto legível.
+ * A imagem já foi produzida com o degradê azul embutido à esquerda — por
+ * isso não há overlay extra no desktop (a composição original é preservada
+ * em telas largas). No mobile, o corte é horizontal, então reforçamos com
+ * um gradiente azul adicional para legibilidade.
  *
- * SUBSTITUIÇÃO
- * Troque `TEMP_IMAGE` por: imagem definitiva/local em `public/images`,
- * imagem gerada por IA, ou substitua o <Image> por um <video> (mantendo
- * `absolute inset-0 h-full w-full object-cover`).
+ * A transição para a próxima seção é reforçada (gradiente mais alto + uma
+ * fina camada com blur na borda) para que a Hero "desapareça" suavemente,
+ * sem corte seco.
  */
+const HERO_IMAGE = '/images/hero-background.png';
 
-// TEMPORÁRIA (Unsplash) — casal/idoso transmitindo autonomia e bem-estar.
-// Para trocar a foto, altere apenas esta URL.
-const TEMP_IMAGE =
-  'https://images.unsplash.com/photo-1516726817505-f5ed825624d8?auto=format&fit=crop&w=1920&q=80';
+export function HeroImage() {
+  const reduce = useReducedMotion();
 
-interface HeroImageProps {
-  src?: string;
-  alt?: string;
-  className?: string;
-}
-
-export function HeroImage({
-  src = TEMP_IMAGE,
-  alt = 'Casal de idosos sorridente ao ar livre, transmitindo autonomia, segurança e qualidade de vida',
-  className,
-}: HeroImageProps) {
   return (
-    <div className={cn('absolute inset-0 -z-10 bg-secondary', className)}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
+    <div className="absolute inset-0 overflow-hidden bg-primary">
+      <m.div
+        className="absolute inset-0"
+        animate={reduce ? undefined : { scale: [1, 1.025, 1] }}
+        transition={
+          reduce ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity }
+        }
+      >
+        <Image
+          src={HERO_IMAGE}
+          alt="Casal de idosos caminhando de mãos dadas à beira de um lago, ao entardecer, transmitindo autonomia, cuidado e tranquilidade"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[62%_38%] md:object-[center_40%]"
+        />
+      </m.div>
+
+      {/* Reforço de legibilidade SOMENTE no mobile. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[linear-gradient(105deg,hsl(213_62%_12%/0.85)_0%,hsl(213_62%_14%/0.55)_38%,hsl(213_62%_16%/0.15)_60%,transparent_78%)] md:hidden"
+      />
+
+      {/* Transição para a próxima seção — mais alta, com leve blur na borda. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-background via-background/70 to-transparent sm:h-44 lg:h-56"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/30 md:bg-gradient-to-r md:from-background md:via-background/80 md:to-transparent"
+        className="absolute inset-x-0 bottom-0 h-14 backdrop-blur-[3px] [mask-image:linear-gradient(to_top,black,transparent)] sm:h-16"
       />
     </div>
   );

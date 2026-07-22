@@ -14,6 +14,8 @@ interface SectionHeadingProps {
   id?: string;
   className?: string;
   as?: 'h2' | 'h3';
+  /** 'light' usa texto branco — para seções com fundo escuro (ex.: navy). */
+  tone?: 'default' | 'light';
 }
 
 export function SectionHeading({
@@ -24,8 +26,10 @@ export function SectionHeading({
   id,
   className,
   as: Heading = 'h2',
+  tone = 'default',
 }: SectionHeadingProps) {
   const centered = align === 'center';
+  const light = tone === 'light';
   return (
     <Reveal
       className={cn(
@@ -42,7 +46,8 @@ export function SectionHeading({
       <Heading
         id={id}
         className={cn(
-          'text-3xl text-foreground sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]',
+          'text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]',
+          light ? 'text-white' : 'text-foreground',
           centered && 'max-w-2xl'
         )}
       >
@@ -51,7 +56,8 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            'mt-4 text-lg leading-relaxed text-muted-foreground',
+            'mt-4 text-lg leading-relaxed',
+            light ? 'text-white/75' : 'text-muted-foreground',
             centered ? 'max-w-2xl' : 'max-w-prose'
           )}
         >

@@ -44,21 +44,24 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled
-          ? 'border-b border-border/70 bg-background/85 backdrop-blur-md'
-          : 'bg-transparent'
-      )}
+    <m.header
+      initial={{ y: -32, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-4 sm:pt-4"
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex h-16 w-full max-w-screen-2xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-8"
+        className={cn(
+          'mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4 rounded-[18px] border border-white/50 bg-white/80 px-4 backdrop-blur-xl transition-all duration-300 sm:px-6',
+          scrolled
+            ? 'h-14 shadow-[0_8px_30px_-8px_rgba(15,42,74,0.25)] lg:h-16'
+            : 'h-16 shadow-[0_4px_20px_-8px_rgba(15,42,74,0.15)] lg:h-[4.5rem]'
+        )}
       >
         <Logo />
 
-        {/* Navegação desktop */}
+        {/* Navegação desktop — underline animado no hover */}
         <ul className="hidden items-center gap-1 lg:flex">
           {OFFICIAL_NAV_ITEMS.map((item) => (
             <li key={item.label}>
@@ -66,7 +69,7 @@ export function Navbar() {
                 href={item.href}
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noopener noreferrer' : undefined}
-                className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
+                className="relative px-3 py-2 text-sm font-medium text-foreground/80 transition-colors after:absolute after:bottom-1 after:left-3 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:text-primary hover:after:w-[calc(100%-1.5rem)]"
               >
                 {item.label}
               </Link>
@@ -119,7 +122,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-b border-border bg-background lg:hidden"
+            className="mx-auto mt-2 w-full max-w-screen-2xl overflow-hidden rounded-2xl border border-white/50 bg-white/90 shadow-lg backdrop-blur-xl lg:hidden"
           >
             <ul className="mx-auto flex w-full max-w-screen-2xl flex-col gap-1 px-4 py-4 sm:px-6">
               {OFFICIAL_NAV_ITEMS.map((item) => (
@@ -152,6 +155,6 @@ export function Navbar() {
           </m.div>
         )}
       </AnimatePresence>
-    </header>
+    </m.header>
   );
 }
