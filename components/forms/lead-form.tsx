@@ -34,7 +34,7 @@ export function LeadForm() {
 
   async function onSubmit(data: LeadSchema) {
     try {
-      const res = await fetch('/api/lead.php', {
+      const res = await fetch('/api/saude-terceira-idade.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
