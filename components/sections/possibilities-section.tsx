@@ -5,8 +5,9 @@ import { POSSIBILITIES_ITEMS } from '@/constants/content';
  * Possibilidades — formatos de plano disponíveis.
  *
  * Seção institucional: mesmo tratamento visual do "Como funciona" (fundo
- * azul-marinho + grid discreto), com detalhes em vermelho institucional
- * nos ícones dos cards.
+ * azul-marinho + grid discreto), com destaque em azul-claro nos ícones e no
+ * hover dos cards — cor diferente da usada em "O que analisamos" (vermelho),
+ * para as duas seções não competirem pela mesma cor de destaque.
  */
 export function PossibilitiesSection() {
   return (
@@ -40,8 +41,8 @@ export function PossibilitiesSection() {
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {POSSIBILITIES_ITEMS.map((item, i) => (
             <Reveal as="li" key={item.title} delay={(i % 4) * 0.07}>
-              <div className="group h-full rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-danger/50 hover:shadow-[0_0_0_1px_rgba(220,38,38,0.3),0_16px_32px_-12px_rgba(220,38,38,0.35)]">
-                <span className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-white/10 text-danger transition-colors group-hover:bg-danger group-hover:text-white">
+              <div className="group h-full rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#8ec5ff]/50 hover:shadow-[0_0_0_1px_rgba(142,197,255,0.35),0_16px_32px_-12px_rgba(142,197,255,0.3)]">
+                <span className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-white/10 text-[#8ec5ff] transition-colors group-hover:bg-[#8ec5ff] group-hover:text-[hsl(213_62%_14%)]">
                   <item.icon aria-hidden="true" className="size-6" />
                 </span>
                 <h3 className="text-lg font-bold text-white">{item.title}</h3>
