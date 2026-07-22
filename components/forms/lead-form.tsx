@@ -164,13 +164,13 @@ export function LeadForm() {
                         {...register('age')}
                       />
                     </Field>
-                    <Field label="Idade do segundo beneficiário" htmlFor="secondAge" error={(errors as any).secondAge?.message}>
+                    <Field label="Idade do segundo beneficiário" htmlFor="secondAge" error={errors.secondAge?.message}>
                       <Input
                         id="secondAge"
                         inputMode="numeric"
                         placeholder="Ex.: 60"
-                        aria-invalid={!!(errors as any).secondAge}
-                        {...register('secondAge' as any)}
+                        aria-invalid={!!errors.secondAge}
+                        {...register('secondAge')}
                       />
                     </Field>
                   </div>
