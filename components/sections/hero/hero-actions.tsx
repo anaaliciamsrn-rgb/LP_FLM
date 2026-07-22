@@ -37,7 +37,7 @@ export function HeroActions() {
         asChild
         variant="outline"
         size="xl"
-        className="w-full border-white/40 bg-transparent text-white backdrop-blur-sm transition-colors hover:border-white hover:bg-white/10 sm:w-auto"
+        className="w-full border-white/40 bg-transparent text-white backdrop-blur-sm transition-colors hover:bg-[#20ba56] hover:border-white sm:w-auto"
       >
         <a
           href={getWhatsappUrl()}

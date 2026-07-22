@@ -27,7 +27,7 @@ export function FinalCtaSection() {
                 <ArrowRight aria-hidden="true" />
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
+            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto transition-colors hover:bg-[#20ba56]">
               <a
                 href={getWhatsappUrl()}
                 target="_blank"
