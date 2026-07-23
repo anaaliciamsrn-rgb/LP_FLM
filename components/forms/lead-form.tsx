@@ -17,6 +17,7 @@ import { leadSchema, PLAN_FOR_OPTIONS, type LeadSchema } from '@/lib/validations
 export function LeadForm() {
   const [showOptional, setShowOptional] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [website, setWebsite] = useState('');
 
   const {
     register,
@@ -37,11 +38,12 @@ export function LeadForm() {
       const res = await fetch('/api/saude-terceira-idade.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, website }),
       });
       if (!res.ok) throw new Error('request failed');
       setStatus('success');
       reset();
+      setWebsite('');
       setShowOptional(false);
     } catch {
       setStatus('error');
@@ -74,6 +76,18 @@ export function LeadForm() {
       noValidate
       className="rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8"
     >
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website">Se você é humano, ignore este campo:</label>
+        <input
+          id="website"
+          type="text"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       <div className="grid gap-5">
         <Field label="Nome completo" htmlFor="name" required error={errors.name?.message}>
           <Input
