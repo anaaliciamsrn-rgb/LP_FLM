@@ -11,6 +11,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// 2. RATE LIMIT AVANÇADO (5 ENVIOS A CADA 30 MINUTOS)
+$ip_cliente = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$ip_hash = md5($ip_cliente); // Criptografia anônima para LGPD
+$janela_tempo = 1800; // 30 minutos em segundos
+$limite_envios = 5; // 5 envios permitidos dentro da janela de tempo
+
+$pasta_tmp = sys_get_temp_dir(); // Pasta segura temporária do servidor
+$arquivo_historico = $pasta_tmp . '/rate_' . $ip_hash . '.json';
+
+$agora = time();
+$historico = [];
+
+// Se o registro do IP já existir, carrega o histórico de cliques
+if (file_exists($arquivo_historico)) {
+    $conteudo = file_get_contents($arquivo_historico);
+    $dados_salvos = json_decode($conteudo, true);
+    if (is_array($dados_salvos)) {
+        $historico = $dados_salvos;
+    }
+}
+
+// Limpa do histórico cliques antigos que já passaram de 30 minutos
+$historico = array_filter($historico, function($timestamp) use ($agora, $janela_tempo) {
+    return ($agora - $timestamp) < $janela_tempo;
+});
+
+// Verifica se o usuário estourou o limite de 5 envios ativos na janela
+if (count($historico) >= $limite_envios) {
+    $mais_antigo = min($historico);
+    $tempo_restante_segundos = $janela_tempo - ($agora - $mais_antigo);
+    $tempo_restante_minutos = ceil($tempo_restante_segundos / 60);
+
+    http_response_code(429); // Código HTTP oficial para Too Many Requests
+    echo json_encode([
+        "error" => "Limite de envios excedido. Tente novamente em {$tempo_restante_minutos} minutos.",
+        "retry_after_minutes" => $tempo_restante_minutos
+    ]);
+    exit;
+}
+
+// Adiciona o envio atual ao histórico e salva o arquivo no servidor
+$historico[] = $agora;
+file_put_contents($arquivo_historico, json_encode(array_values($historico)));
+
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(["error" => "Método não permitido."]);
