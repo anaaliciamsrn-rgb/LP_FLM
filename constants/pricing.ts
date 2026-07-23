@@ -1,33 +1,35 @@
+import type { LucideIcon } from 'lucide-react';
+import { BedDouble, DoorClosed } from 'lucide-react';
+
 /**
- * Tabela de valores de REFERÊNCIA (Prevent Senior 1025).
- * Dados conforme material do cliente. Edite aqui para atualizar a seção —
- * nenhum valor fica espalhado pelos componentes.
+ * Categorias de acomodação — valores de referência ("a partir de").
+ *
+ * Por pedido do cliente: sem nome de operadora, sem código ANS e sem tabela
+ * por faixa etária — apenas o valor de entrada de cada categoria, de forma
+ * simples e visualmente leve. `startingPrice` usa o menor valor disponível
+ * na tabela vigente (faixa mais barata) como "a partir de".
  */
-export interface PriceRow {
-  ageRange: string;
-  enfermaria: string;
-  apartamento: string;
-  highlight?: boolean;
+export interface PricingCategory {
+  icon: LucideIcon;
+  label: string;
+  description: string;
+  startingPrice: string;
 }
 
-export const PRICING_PLAN = {
-  name: 'Prevent Senior 1025',
-  tiers: {
-    enfermaria: { label: 'Enfermaria', ans: 'ANS 505.407/25-9' },
-    apartamento: { label: 'Apartamento', ans: 'ANS 505.408/25-7' },
-  },
-} as const;
-
-export const PRICING_ROWS: PriceRow[] = [
-  { ageRange: 'Até 43 anos', enfermaria: 'R$ 759,84', apartamento: 'R$ 907,73' },
-  { ageRange: '44 a 58 anos', enfermaria: 'R$ 999,84', apartamento: 'R$ 1.195,06' },
+export const PRICING_CATEGORIES: PricingCategory[] = [
   {
-    ageRange: '59 anos em diante',
-    enfermaria: 'R$ 1.315,59',
-    apartamento: 'R$ 1.572,45',
-    highlight: true,
+    icon: BedDouble,
+    label: 'Enfermaria',
+    description: 'Acomodação compartilhada, com toda a segurança e cuidado nas internações.',
+    startingPrice: 'R$ 759,84',
+  },
+  {
+    icon: DoorClosed,
+    label: 'Apartamento',
+    description: 'Mais privacidade e conforto para você durante a internação.',
+    startingPrice: 'R$ 907,73',
   },
 ];
 
 export const PRICING_DISCLAIMER =
-  'Valores de referência (tabela vigente), sujeitos a análise de perfil, faixa etária, carências e condições da operadora. A entrevista qualificada é exigida exclusivamente para beneficiários entre 0 e 18 anos, conforme a Resolução Normativa ANS nº 558/2022.';
+  'Valores de referência (tabela vigente), sujeitos a análise de perfil, carências e condições da operadora.';

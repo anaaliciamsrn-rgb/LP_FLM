@@ -21,6 +21,8 @@ const buttonVariants = cva(
           'border border-input bg-background hover:bg-secondary hover:text-secondary-foreground',
         ghost: 'hover:bg-secondary hover:text-secondary-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        whatsapp:
+          'bg-[#25D366] text-white shadow-[0_4px_14px_-4px_rgba(37,211,102,0.6)] hover:bg-[#1fb959]',
       },
       size: {
         sm: 'h-10 rounded-md px-4 text-sm',

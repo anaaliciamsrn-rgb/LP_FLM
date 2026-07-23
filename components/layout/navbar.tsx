@@ -53,10 +53,10 @@ export function Navbar() {
       <nav
         aria-label="Navegação principal"
         className={cn(
-          'mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4 rounded-[18px] border border-white/50 bg-white/80 px-4 backdrop-blur-xl transition-all duration-300 sm:px-6',
+          'mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4 rounded-[18px] border bg-white/75 px-4 backdrop-blur-xl transition-all duration-500 sm:px-6',
           scrolled
-            ? 'h-14 shadow-[0_8px_30px_-8px_rgba(15,42,74,0.25)] lg:h-16'
-            : 'h-16 shadow-[0_4px_20px_-8px_rgba(15,42,74,0.15)] lg:h-[4.5rem]'
+            ? 'h-14 border-white/40 shadow-[0_10px_34px_-10px_rgba(15,42,74,0.3)] backdrop-blur-2xl lg:h-16'
+            : 'h-16 border-white/30 shadow-[0_4px_18px_-8px_rgba(15,42,74,0.12)] backdrop-blur-lg lg:h-[4.5rem]'
         )}
       >
         <Logo />
@@ -87,7 +87,7 @@ export function Navbar() {
           >
             Diagnóstico de risco
           </a>
-          <Button asChild variant="primary" size="sm">
+          <Button asChild variant="whatsapp" size="sm">
             <a
               href={whatsappUrl}
               target="_blank"
@@ -139,7 +139,7 @@ export function Navbar() {
                 </li>
               ))}
               <li className="pt-2">
-                <Button asChild variant="primary" size="lg" className="w-full">
+                <Button asChild variant="whatsapp" size="lg" className="w-full">
                   <a
                     href={whatsappUrl}
                     target="_blank"

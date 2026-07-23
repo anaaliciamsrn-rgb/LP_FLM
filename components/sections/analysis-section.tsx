@@ -19,7 +19,12 @@ export function AnalysisSection() {
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {ANALYSIS_ITEMS.map((item, i) => (
           <Reveal as="li" key={item.title} delay={(i % 3) * 0.08}>
-            <FeatureCard icon={item.icon} title={item.title} description={item.description} />
+            <FeatureCard
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              accent="danger"
+            />
           </Reveal>
         ))}
       </ul>
